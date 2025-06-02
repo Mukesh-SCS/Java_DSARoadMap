@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DSA Roadmap</title>
+  <style>
+    /* Container for all roadmap boxes */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+    .header {
+      background-color: #2196F3;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    .header img {
+      max-width: 120px;
+      display: block;
+      margin: 0 auto 10px;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1.2;
+    }
+    .instructions {
+      background-color: #e3f2fd;
+      border-left: 4px solid #2196F3;
+      padding: 16px;
+      margin: 20px auto;
+      max-width: 800px;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .instructions h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #0D47A1;
+    }
+    .instructions p {
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+    .instructions img {
+      display: block;
+      margin: 12px auto;
+      max-width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .roadmap-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+
+    /* Individual box styling */
+    .roadmap-box {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s;
+    }
+    .roadmap-box:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Header for each topic */
+    .roadmap-box h3 {
+      margin: 0;
+      padding: 12px 16px;
+      background-color: #2196F3;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 500;
+      border-bottom: 1px solid #1E88E5;
+    }
+
+    /* Content area inside a box */
+    .roadmap-box .content {
+      padding: 12px 16px;
+      flex: 1;
+    }
+
+    /* Styling the list of subtopics */
+    .roadmap-box ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .roadmap-box li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .roadmap-box li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Checkbox and label styling */
+    .roadmap-box input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      background-color: #fff;
+      border: 2px solid #2196F3;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      outline: none;
+      position: relative;
+      transition: border 0.2s;
+      margin-right: 8px;
+    }
+
+    .roadmap-box input[type="checkbox"]:checked::before {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: #e53935; /* red color */
+      border-radius: 50%;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+    }
+
+    .roadmap-box label {
+      font-size: 0.95rem;
+      color: #333;
+      cursor: pointer;
+    }
+
+    /* Scrollbar styling for long lists */
+    .roadmap-box .content {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .roadmap-box .content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .roadmap-box .content::-webkit-scrollbar-track {
+      background: #f0f2f5;
+      border-radius: 3px;
+    }
+
+    .roadmap-box .content::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 3px;
+    }
+
+    @media (max-width: 600px) {
+      .roadmap-box .content {
+        max-height: none;
+      }
+    }
+
+    /* Example box styling for all sections */
+    .example-box {
+      margin: 16px 0 0 0;
+      padding: 12px 16px;
+      background: #f7fbff;
+      border-left: 4px solid #90caf9;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95rem;
+      display: none;
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    .definition {
+      font-size: 0.89rem;
+      color: #555;
+      margin-left: 28px;
+      margin-bottom: 8px;
+      background: #eef7ff;
+      border-left: 3px solid #90caf9;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with a logo/image -->
+  <div class="header">
+    <!-- Place your image file in the same directory and name it "roadmap-banner.png" -->
+    <img src="roadmap-banner.png" alt="DSA Roadmap Banner" />
+    <h1>Interactive DSA Roadmap</h1>
+  </div>
+
+  <!-- Instructions section for running the HTML in VS Code -->
+  <div class="instructions">
+    <h2>How to View &amp; Run This Roadmap in Visual Studio Code</h2>
+    <p>1. <strong>Save this HTML as <code>dsa-roadmap.html</code>:</strong><br>
+      - In VS Code, create a new file and paste the HTML code.<br>
+      - Save it in a folder of your choice with the name <code>dsa-roadmap.html</code>.
+    </p>
+    <p>2. <strong>Install and Open with Live Server:</strong><br>
+      - Open the folder in VS Code (File → Open Folder…).<br>
+      - Go to Extensions (Ctrl+Shift+X or Cmd+Shift+X).<br>
+      - Search for <em>Live Server</em> by Ritwick Dey and install it.<br>
+      - In the Explorer, right-click <code>dsa-roadmap.html</code> → “Open with Live Server”.</p>
+    <p>3. <strong>See It Live:</strong><br>
+      - A browser tab will open automatically. Whenever you save changes in VS Code, the page refreshes.<br>
+      - If you don’t have Live Server, just double-click <code>dsa-roadmap.html</code> in your file explorer to open it in the browser and refresh manually after edits.</p>
+    <!-- Example screenshot of VS Code Live Server button -->
+    <!-- Place this image file in the same folder and name it "vscode-live-server.png" -->
+    <img src="vscode-live-server.png" alt="VS Code Live Server Button" />
+    <p style="font-size: 0.86rem; color:#555; text-align:center;">
+      (Click the “Go Live” button at the bottom-right of VS Code)
+    </p>
+  </div>
+
+  <!-- Roadmap Grid -->
+  <div class="roadmap-container">
+
+    <!-- 1. Java Basics -->
+    <div class="roadmap-box" id="java-basics-section">
+      <h3>1. Java Basics</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="jb-syntax-variables" data-definition="The basic structure and rules of Java code, including how to declare and use variables."/>
+            <label for="jb-syntax-variables">Syntax &amp; Variables</label>
+          </li>
+          <li>
+            <input type="checkbox" id="jb-data-types" data-definition="Different kinds of values Java can store, such as int, double, char, boolean, etc."/>
+            <label for="jb-data-types">Data Types</label>
+          </li>
+          <li>
+            <input type="checkbox" id="jb-loops-conditionals" data-definition="Control flow statements like if, else, for, while, and switch to make decisions and repeat actions."/>
+            <label for="jb-loops-conditionals">Loops &amp; Conditionals</label>
+          </li>
+          <li>
+            <input type="checkbox" id="jb-methods-scope" data-definition="How to define reusable blocks of code (methods) and the visibility of variables (scope)." />
+            <label for="jb-methods-scope">Methods &amp; Scope</label>
+          </li>
+        </ul>
+        <div class="example-box" id="java-basics-example"></div>
+      </div>
+    </div>
+
+    <!-- 2. Object-Oriented Programming -->
+    <div class="roadmap-box" id="oop-section">
+      <h3>2. Object-Oriented Programming</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="oop-classes-objects" data-definition="Classes are blueprints for objects; objects are instances of classes containing data and behavior."/>
+            <label for="oop-classes-objects">Classes &amp; Objects</label>
+          </li>
+          <li>
+            <input type="checkbox" id="oop-inheritance" data-definition="A mechanism where one class acquires the properties and behaviors of another class."/>
+            <label for="oop-inheritance">Inheritance</label>
+          </li>
+          <li>
+            <input type="checkbox" id="oop-polymorphism" data-definition="The ability of an object to take many forms, typically by overriding methods in subclasses."/>
+            <label for="oop-polymorphism">Polymorphism</label>
+          </li>
+          <li>
+            <input type="checkbox" id="oop-abstraction-interfaces" data-definition="Abstraction hides complex implementation; interfaces define contracts that classes can implement."/>
+            <label for="oop-abstraction-interfaces">Abstraction &amp; Interfaces</label>
+          </li>
+        </ul>
+        <div class="example-box" id="oop-example"></div>
+      </div>
+    </div>
+
+    <!-- 3. Arrays -->
+    <div class="roadmap-box" id="arrays-section">
+      <h3>3. Arrays</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="arr-declaration-initialization" data-definition="How to declare and initialize arrays in Java."/>
+            <label for="arr-declaration-initialization">Declaration &amp; Initialization</label>
+          </li>
+          <li>
+            <input type="checkbox" id="arr-iteration-updates" data-definition="Iterating over arrays and updating values."/>
+            <label for="arr-iteration-updates">Iteration &amp; Updates</label>
+          </li>
+          <li>
+            <input type="checkbox" id="arr-sorting-techniques" data-definition="Techniques to sort arrays, like bubble sort, selection sort, etc."/>
+            <label for="arr-sorting-techniques">Sorting Techniques</label>
+          </li>
+          <li>
+            <input type="checkbox" id="arr-two-pointer-method" data-definition="A technique that uses two pointers to solve array problems."/>
+            <label for="arr-two-pointer-method">Two Pointer Method</label>
+          </li>
+        </ul>
+        <div class="example-box" id="arrays-example"></div>
+      </div>
+    </div>
+
+    <!-- 4. Strings -->
+    <div class="roadmap-box" id="strings-section">
+      <h3>4. Strings</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="str-stringbuilder-usage" data-definition="Using StringBuilder for efficient string manipulation."/>
+            <label for="str-stringbuilder-usage">StringBuilder Usage</label>
+          </li>
+          <li>
+            <input type="checkbox" id="str-palindromes" data-definition="Checking if a string is the same when reversed."/>
+            <label for="str-palindromes">Palindromes</label>
+          </li>
+          <li>
+            <input type="checkbox" id="str-substrings-patterns" data-definition="Extracting substrings and finding patterns within strings."/>
+            <label for="str-substrings-patterns">Substrings &amp; Patterns</label>
+          </li>
+          <li>
+            <input type="checkbox" id="str-character-frequency" data-definition="Counting the frequency of each character in a string."/>
+            <label for="str-character-frequency">Character Frequency</label>
+          </li>
+        </ul>
+        <div class="example-box" id="strings-example"></div>
+      </div>
+    </div>
+
+    <!-- 5. Recursion -->
+    <div class="roadmap-box" id="recursion-section">
+      <h3>5. Recursion</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="rec-base-recursive-case" data-definition="Understanding the base case and recursive case in recursion."/>
+            <label for="rec-base-recursive-case">Base &amp; Recursive Case</label>
+          </li>
+          <li>
+            <input type="checkbox" id="rec-backtracking-basics" data-definition="Introduction to backtracking and its basic concepts."/>
+            <label for="rec-backtracking-basics">Backtracking Basics</label>
+          </li>
+          <li>
+            <input type="checkbox" id="rec-recursion-tree" data-definition="Visualizing recursion as a tree structure."/>
+            <label for="rec-recursion-tree">Recursion Tree</label>
+          </li>
+          <li>
+            <input type="checkbox" id="rec-memoization-concept" data-definition="Concept of optimizing recursion with memoization."/>
+            <label for="rec-memoization-concept">Memoization Concept</label>
+          </li>
+        </ul>
+        <div class="example-box" id="recursion-example"></div>
+      </div>
+    </div>
+
+    <!-- 6. Sorting Algorithms -->
+    <div class="roadmap-box" id="sorting-section">
+      <h3>6. Sorting Algorithms</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="sort-bubble-sort" data-definition="A simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order."/>
+            <label for="sort-bubble-sort">Bubble Sort</label>
+          </li>
+          <li>
+            <input type="checkbox" id="sort-selection-sort" data-definition="A sorting algorithm that selects the smallest element from an unsorted list and swaps it with the element at the beginning of the list."/>
+            <label for="sort-selection-sort">Selection Sort</label>
+          </li>
+          <li>
+            <input type="checkbox" id="sort-merge-sort" data-definition="A divide and conquer algorithm that was invented by John von Neumann in 1945."/>
+            <label for="sort-merge-sort">Merge Sort</label>
+          </li>
+          <li>
+            <input type="checkbox" id="sort-quick-sort" data-definition="An efficient sorting algorithm that uses a divide-and-conquer approach to sort elements."/>
+            <label for="sort-quick-sort">Quick Sort</label>
+          </li>
+        </ul>
+        <div class="example-box" id="sorting-example"></div>
+      </div>
+    </div>
+
+    <!-- 7. Searching Algorithms -->
+    <div class="roadmap-box" id="searching-section">
+      <h3>7. Searching Algorithms</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="search-linear-search" data-definition="A basic searching algorithm that checks every element in the list until the desired element is found."/>
+            <label for="search-linear-search">Linear Search</label>
+          </li>
+          <li>
+            <input type="checkbox" id="search-binary-search" data-definition="A fast search algorithm that works on sorted arrays by repeatedly dividing the search interval in half."/>
+            <label for="search-binary-search">Binary Search</label>
+          </li>
+          <li>
+            <input type="checkbox" id="search-search-in-matrix" data-definition="Techniques to search for an element in a 2D matrix."/>
+            <label for="search-search-in-matrix">Search in Matrix</label>
+          </li>
+          <li>
+            <input type="checkbox" id="search-search-variants" data-definition="Various techniques and algorithms to perform search operations."/>
+            <label for="search-search-variants">Search Variants</label>
+          </li>
+        </ul>
+        <div class="example-box" id="searching-example"></div>
+      </div>
+    </div>
+
+    <!-- 8. Linked List -->
+    <div class="roadmap-box" id="linkedlist-section">
+      <h3>8. Linked List</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="ll-singly-doubly" data-definition="Understanding the difference between singly and doubly linked lists."/>
+            <label for="ll-singly-doubly">Singly &amp; Doubly</label>
+          </li>
+          <li>
+            <input type="checkbox" id="ll-insertion-deletion" data-definition="How to insert and delete nodes in a linked list."/>
+            <label for="ll-insertion-deletion">Insertion &amp; Deletion</label>
+          </li>
+          <li>
+            <input type="checkbox" id="ll-reversing-list" data-definition="Techniques to reverse a linked list."/>
+            <label for="ll-reversing-list">Reversing List</label>
+          </li>
+          <li>
+            <input type="checkbox" id="ll-detect-cycle" data-definition="Detecting cycles in a linked list using Floyd's cycle detection algorithm."/>
+            <label for="ll-detect-cycle">Detect Cycle</label>
+          </li>
+        </ul>
+        <div class="example-box" id="linkedlist-example"></div>
+      </div>
+    </div>
+
+    <!-- 9. Stacks -->
+    <div class="roadmap-box" id="stacks-section">
+      <h3>9. Stacks</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="stacks-array" data-definition="Implementing stack data structure using an array."/>
+            <label for="stacks-array">Stack using Array</label>
+          </li>
+          <li>
+            <input type="checkbox" id="stacks-linkedlist" data-definition="Implementing stack data structure using a linked list."/>
+            <label for="stacks-linkedlist">Stack using LinkedList</label>
+          </li>
+          <li>
+            <input type="checkbox" id="stacks-next-greater-element" data-definition="Finding the next greater element for each element in an array."/>
+            <label for="stacks-next-greater-element">Next Greater Element</label>
+          </li>
+          <li>
+            <input type="checkbox" id="stacks-balanced-parentheses" data-definition="Checking for balanced parentheses in an expression."/>
+            <label for="stacks-balanced-parentheses">Balanced Parentheses</label>
+          </li>
+        </ul>
+        <div class="example-box" id="stacks-example"></div>
+      </div>
+    </div>
+
+    <!-- 10. Queues -->
+    <div class="roadmap-box" id="queues-section">
+      <h3>10. Queues</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="queues-array" data-definition="Implementing queue data structure using an array."/>
+            <label for="queues-array">Queue using Array</label>
+          </li>
+          <li>
+            <input type="checkbox" id="queues-circular-queue" data-definition="Implementing circular queue data structure."/>
+            <label for="queues-circular-queue">Circular Queue</label>
+          </li>
+          <li>
+            <input type="checkbox" id="queues-deque-operations" data-definition="Performing operations on a deque (double-ended queue)."/>
+            <label for="queues-deque-operations">Deque Operations</label>
+          </li>
+          <li>
+            <input type="checkbox" id="queues-priority-queue" data-definition="Implementing priority queue data structure."/>
+            <label for="queues-priority-queue">Priority Queue</label>
+          </li>
+        </ul>
+        <div class="example-box" id="queues-example"></div>
+      </div>
+    </div>
+
+    <!-- 11. Hashing -->
+    <div class="roadmap-box" id="hashing-section">
+      <h3>11. Hashing</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="hash-hashmap-basics" data-definition="Basics of HashMap and how to use it."/>
+            <label for="hash-hashmap-basics">HashMap Basics</label>
+          </li>
+          <li>
+            <input type="checkbox" id="hash-frequency-count" data-definition="Counting the frequency of elements in an array using HashMap."/>
+            <label for="hash-frequency-count">Frequency Count</label>
+          </li>
+          <li>
+            <input type="checkbox" id="hash-two-sum-problem" data-definition="Solving the Two Sum problem using HashMap."/>
+            <label for="hash-two-sum-problem">Two Sum Problem</label>
+          </li>
+          <li>
+            <input type="checkbox" id="hash-anagram-groups" data-definition="Grouping anagrams together using HashMap."/>
+            <label for="hash-anagram-groups">Anagram Groups</label>
+          </li>
+        </ul>
+        <div class="example-box" id="hashing-example"></div>
+      </div>
+    </div>
+
+    <!-- 12. Trees -->
+    <div class="roadmap-box" id="trees-section">
+      <h3>12. Trees</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="tree-binary-tree-basics" data-definition="Basics of binary trees and how they work."/>
+            <label for="tree-binary-tree-basics">Binary Tree Basics</label>
+          </li>
+          <li>
+            <input type="checkbox" id="tree-traversals" data-definition="Different methods to traverse a tree (DFS, BFS)." />
+            <label for="tree-traversals">Traversals (DFS, BFS)</label>
+          </li>
+          <li>
+            <input type="checkbox" id="tree-bst" data-definition="Understanding binary search trees and their properties."/>
+            <label for="tree-bst">Binary Search Tree</label>
+          </li>
+          <li>
+            <input type="checkbox" id="tree-lowest-common-ancestor" data-definition="Finding the lowest common ancestor in a binary tree."/>
+            <label for="tree-lowest-common-ancestor">Lowest Common Ancestor</label>
+          </li>
+        </ul>
+        <div class="example-box" id="trees-example"></div>
+      </div>
+    </div>
+
+    <!-- 13. Heaps -->
+    <div class="roadmap-box" id="heaps-section">
+      <h3>13. Heaps</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="heap-min-heap" data-definition="Understanding min heaps and how to implement them."/>
+            <label for="heap-min-heap">Min Heap</label>
+          </li>
+          <li>
+            <input type="checkbox" id="heap-max-heap" data-definition="Understanding max heaps and how to implement them."/>
+            <label for="heap-max-heap">Max Heap</label>
+          </li>
+          <li>
+            <input type="checkbox" id="heap-heap-sort" data-definition="Sorting an array using heap sort algorithm."/>
+            <label for="heap-heap-sort">Heap Sort</label>
+          </li>
+          <li>
+            <input type="checkbox" id="heap-top-k-elements" data-definition="Finding top K elements in an array using heaps."/>
+            <label for="heap-top-k-elements">Top K Elements</label>
+          </li>
+        </ul>
+        <div class="example-box" id="heaps-example"></div>
+      </div>
+    </div>
+
+    <!-- 14. Graphs -->
+    <div class="roadmap-box" id="graphs-section">
+      <h3>14. Graphs</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="graph-adjacency-list-matrix" data-definition="Representing graphs using adjacency list and matrix."/>
+            <label for="graph-adjacency-list-matrix">Adjacency List/Matrix</label>
+          </li>
+          <li>
+            <input type="checkbox" id="graph-dfs-bfs" data-definition="Traversing graphs using DFS and BFS algorithms."/>
+            <label for="graph-dfs-bfs">DFS &amp; BFS</label>
+          </li>
+          <li>
+            <input type="checkbox" id="graph-dijkstra" data-definition="Finding the shortest path in a graph using Dijkstra’s Algorithm."/>
+            <label for="graph-dijkstra">Dijkstra’s Algorithm</label>
+          </li>
+          <li>
+            <input type="checkbox" id="graph-topological-sort" data-definition="Sorting the vertices of a graph in topological order."/>
+            <label for="graph-topological-sort">Topological Sort</label>
+          </li>
+        </ul>
+        <div class="example-box" id="graphs-example"></div>
+      </div>
+    </div>
+
+    <!-- 15. Dynamic Programming -->
+    <div class="roadmap-box" id="dp-section">
+      <h3>15. Dynamic Programming</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="dp-1d-problems" data-definition="Solving 1D dynamic programming problems."/>
+            <label for="dp-1d-problems">1D DP Problems</label>
+          </li>
+          <li>
+            <input type="checkbox" id="dp-2d-problems" data-definition="Solving 2D dynamic programming problems."/>
+            <label for="dp-2d-problems">2D DP Problems</label>
+          </li>
+          <li>
+            <input type="checkbox" id="dp-memoization-vs-tabulation" data-definition="Understanding the difference between memoization and tabulation."/>
+            <label for="dp-memoization-vs-tabulation">Memoization vs Tabulation</label>
+          </li>
+          <li>
+            <input type="checkbox" id="dp-longest-subsequence" data-definition="Finding the longest subsequence in a sequence of numbers."/>
+            <label for="dp-longest-subsequence">Longest Subsequence</label>
+          </li>
+        </ul>
+        <div class="example-box" id="dp-example"></div>
+      </div>
+    </div>
+
+    <!-- 16. Greedy Algorithms -->
+    <div class="roadmap-box" id="greedy-section">
+      <h3>16. Greedy Algorithms</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="greedy-activity-selection" data-definition="Selecting the maximum number of activities that don't overlap."/>
+            <label for="greedy-activity-selection">Activity Selection</label>
+          </li>
+          <li>
+            <input type="checkbox" id="greedy-huffman-encoding" data-definition="Encoding data using Huffman coding algorithm."/>
+            <label for="greedy-huffman-encoding">Huffman Encoding</label>
+          </li>
+          <li>
+            <input type="checkbox" id="greedy-fractional-knapsack" data-definition="Solving the fractional knapsack problem using a greedy approach."/>
+            <label for="greedy-fractional-knapsack">Fractional Knapsack</label>
+          </li>
+          <li>
+            <input type="checkbox" id="greedy-job-scheduling" data-definition="Scheduling jobs to maximize profit."/>
+            <label for="greedy-job-scheduling">Job Scheduling</label>
+          </li>
+        </ul>
+        <div class="example-box" id="greedy-example"></div>
+      </div>
+    </div>
+
+    <!-- 17. Sliding Window -->
+    <div class="roadmap-box" id="slidingwindow-section">
+      <h3>17. Sliding Window</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="sw-fixed-window" data-definition="A fixed-size window that slides over the data."/>
+            <label for="sw-fixed-window">Fixed Window</label>
+          </li>
+          <li>
+            <input type="checkbox" id="sw-variable-window" data-definition="A window that can grow and shrink in size."/>
+            <label for="sw-variable-window">Variable Window</label>
+          </li>
+          <li>
+            <input type="checkbox" id="sw-max-min-window" data-definition="Finding the maximum or minimum in a sliding window."/>
+            <label for="sw-max-min-window">Max/Min in Window</label>
+          </li>
+          <li>
+            <input type="checkbox" id="sw-longest-substring" data-definition="Finding the longest substring without repeating characters."/>
+            <label for="sw-longest-substring">Longest Substring</label>
+          </li>
+        </ul>
+        <div class="example-box" id="slidingwindow-example"></div>
+      </div>
+    </div>
+
+    <!-- 18. Bit Manipulation -->
+    <div class="roadmap-box" id="bit-section">
+      <h3>18. Bit Manipulation</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="bit-and-or-xor" data-definition="Bitwise AND, OR, and XOR operations."/>
+            <label for="bit-and-or-xor">AND, OR, XOR</label>
+          </li>
+          <li>
+            <input type="checkbox" id="bit-shifts" data-definition="Left and right bit shifts."/>
+            <label for="bit-shifts">Bit Shifts</label>
+          </li>
+          <li>
+            <input type="checkbox" id="bit-power-of-two" data-definition="Checking if a number is a power of two using bits."/>
+            <label for="bit-power-of-two">Power of Two</label>
+          </li>
+          <li>
+            <input type="checkbox" id="bit-counting-set-bits" data-definition="Counting the number of set bits (1s) in a number."/>
+            <label for="bit-counting-set-bits">Counting Set Bits</label>
+          </li>
+        </ul>
+        <div class="example-box" id="bit-example"></div>
+      </div>
+    </div>
+
+    <!-- 19. Trie (Prefix Tree) -->
+    <div class="roadmap-box" id="trie-section">
+      <h3>19. Trie (Prefix Tree)</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="trie-construction" data-definition="Constructing a trie (prefix tree) from a set of words."/>
+            <label for="trie-construction">Trie Construction</label>
+          </li>
+          <li>
+            <input type="checkbox" id="trie-word-search" data-definition="Searching for a word in a trie."/>
+            <label for="trie-word-search">Word Search</label>
+          </li>
+          <li>
+            <input type="checkbox" id="trie-prefix-matching" data-definition="Finding if any word in the trie starts with a given prefix."/>
+            <label for="trie-prefix-matching">Prefix Matching</label>
+          </li>
+          <li>
+            <input type="checkbox" id="trie-autocomplete-system" data-definition="Building an autocomplete system using a trie."/>
+            <label for="trie-autocomplete-system">Autocomplete System</label>
+          </li>
+        </ul>
+        <div class="example-box" id="trie-example"></div>
+      </div>
+    </div>
+
+    <!-- 20. Backtracking -->
+    <div class="roadmap-box" id="backtracking-section">
+      <h3>20. Backtracking</h3>
+      <div class="content">
+        <ul>
+          <li>
+            <input type="checkbox" id="bt-n-queens" data-definition="Solving the N-Queens problem using backtracking."/>
+            <label for="bt-n-queens">N-Queens Problem</label>
+          </li>
+          <li>
+            <input type="checkbox" id="bt-sudoku-solver" data-definition="Solving Sudoku puzzles using backtracking."/>
+            <label for="bt-sudoku-solver">Sudoku Solver</label>
+          </li>
+          <li>
+            <input type="checkbox" id="bt-subsets-permutations" data-definition="Generating subsets and permutations of a set."/>
+            <label for="bt-subsets-permutations">Subsets &amp; Permutations</label>
+          </li>
+          <li>
+            <input type="checkbox" id="bt-word-search-grid" data-definition="Searching for a word in a 2D grid using backtracking."/>
+            <label for="bt-word-search-grid">Word Search Grid</label>
+          </li>
+        </ul>
+        <div class="example-box" id="backtracking-example"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Java examples for each checkbox
+    const javaExamples = {
+      // 1. Java Basics
+      "jb-syntax-variables": `// Java Syntax & Variables Example
+int number = 10;
+String name = "Alice";
+System.out.println("Number: " + number + ", Name: " + name);`,
+      "jb-data-types": `// Java Data Types Example
+int age = 25;
+double price = 19.99;
+char grade = 'A';
+boolean isActive = true;`,
+      "jb-loops-conditionals": `// Java Loops & Conditionals Example
+for (int i = 0; i < 5; i++) {
+  if (i % 2 == 0) {
+    System.out.println(i + " is even");
+  } else {
+    System.out.println(i + " is odd");
+  }
+}`,
+      "jb-methods-scope": `// Java Methods & Scope Example
+static void greet(String name) {
+  System.out.println("Hello, " + name);
+}
+greet("Bob");`,
+
+      // 2. OOP
+      "oop-classes-objects": `// Java Class & Object Example
+class Dog {
+  String name;
+  void bark() { System.out.println(name + " barks!"); }
+}
+Dog d = new Dog();
+d.name = "Max";
+d.bark();`,
+      "oop-inheritance": `// Java Inheritance Example
+class Animal { void eat() { System.out.println("eating"); } }
+class Dog extends Animal { }
+Dog d = new Dog();
+d.eat();`,
+      "oop-polymorphism": `// Java Polymorphism Example
+class Animal { void sound() { System.out.println("Animal sound"); } }
+class Cat extends Animal { void sound() { System.out.println("Meow"); } }
+Animal a = new Cat();
+a.sound();`,
+      "oop-abstraction-interfaces": `// Java Interface Example
+interface Drawable { void draw(); }
+class Circle implements Drawable {
+  public void draw() { System.out.println("Drawing Circle"); }
+}
+Drawable d = new Circle();
+d.draw();`,
+
+      // 3. Arrays
+      "arr-declaration-initialization": `// Array Declaration & Initialization
+int[] arr = {1, 2, 3, 4};`,
+      "arr-iteration-updates": `// Array Iteration & Update
+for (int i = 0; i < arr.length; i++) {
+  arr[i] = arr[i] * 2;
+}`,
+      "arr-sorting-techniques": `// Sorting an Array
+Arrays.sort(arr);`,
+      "arr-two-pointer-method": `// Two Pointer Example
+int left = 0, right = arr.length - 1;
+while (left < right) {
+  // process arr[left] and arr[right]
+  left++; right--;
+}`,
+
+      // 4. Strings
+      "str-stringbuilder-usage": `// StringBuilder Usage
+StringBuilder sb = new StringBuilder("Hello");
+sb.append(" World");
+System.out.println(sb.toString());`,
+      "str-palindromes": `// Palindrome Check
+String s = "level";
+boolean isPalindrome = s.equals(new StringBuilder(s).reverse().toString());`,
+      "str-substrings-patterns": `// Substring Example
+String s = "abcdef";
+String sub = s.substring(1, 4); // "bcd"`,
+      "str-character-frequency": `// Character Frequency
+int[] freq = new int[26];
+for (char c : s.toCharArray()) freq[c - 'a']++;`,
+
+      // 5. Recursion
+      "rec-base-recursive-case": `// Factorial using Recursion
+int fact(int n) {
+  if (n == 0) return 1; // base case
+  return n * fact(n - 1); // recursive case
+}`,
+      "rec-backtracking-basics": `// Backtracking Example
+void solve(int[] arr, int idx) {
+  if (idx == arr.length) { /* process */ return; }
+  solve(arr, idx + 1);
+}`,
+      "rec-recursion-tree": `// Recursion Tree Example
+// Visualize calls for fib(4)
+int fib(int n) {
+  if (n <= 1) return n;
+  return fib(n-1) + fib(n-2);
+}`,
+      "rec-memoization-concept": `// Memoization Example
+Map<Integer, Integer> memo = new HashMap<>();
+int fib(int n) {
+  if (n <= 1) return n;
+  if (memo.containsKey(n)) return memo.get(n);
+  int res = fib(n-1) + fib(n-2);
+  memo.put(n, res);
+  return res;
+}`,
+
+      // 6. Sorting Algorithms
+      "sort-bubble-sort": `// Bubble Sort
+for (int i = 0; i < arr.length-1; i++)
+  for (int j = 0; j < arr.length-i-1; j++)
+    if (arr[j] > arr[j+1]) {
+      int t = arr[j]; arr[j] = arr[j+1]; arr[j+1] = t;
+    }`,
+      "sort-selection-sort": `// Selection Sort
+for (int i = 0; i < arr.length-1; i++) {
+  int min = i;
+  for (int j = i+1; j < arr.length; j++)
+    if (arr[j] < arr[min]) min = j;
+  int t = arr[i]; arr[i] = arr[min]; arr[min] = t;
+}`,
+      "sort-merge-sort": `// Merge Sort (recursive)
+void mergeSort(int[] arr, int l, int r) {
+  if (l < r) {
+    int m = (l+r)/2;
+    mergeSort(arr, l, m);
+    mergeSort(arr, m+1, r);
+    // merge logic...
+  }
+}`,
+      "sort-quick-sort": `// Quick Sort (recursive)
+void quickSort(int[] arr, int low, int high) {
+  if (low < high) {
+    int pi = partition(arr, low, high);
+    quickSort(arr, low, pi-1);
+    quickSort(arr, pi+1, high);
+  }
+}`,
+
+      // 7. Searching Algorithms
+      "search-linear-search": `// Linear Search
+for (int i = 0; i < arr.length; i++)
+  if (arr[i] == key) return i;`,
+      "search-binary-search": `// Binary Search
+int l = 0, r = arr.length-1;
+while (l <= r) {
+  int m = (l+r)/2;
+  if (arr[m] == key) return m;
+  if (arr[m] < key) l = m+1;
+  else r = m-1;
+}`,
+      "search-search-in-matrix": `// Search in Matrix
+for (int i = 0; i < matrix.length; i++)
+  for (int j = 0; j < matrix[0].length; j++)
+    if (matrix[i][j] == key) return true;`,
+      "search-search-variants": `// Search Variant Example
+// Find first occurrence, last occurrence, etc.`,
+
+      // 8. Linked List
+      "ll-singly-doubly": `// Singly Linked List Node
+class Node { int val; Node next; }`,
+      "ll-insertion-deletion": `// Insert at Head
+Node head = new Node();
+head.next = oldHead;`,
+      "ll-reversing-list": `// Reverse Linked List
+Node prev = null, curr = head;
+while (curr != null) {
+  Node next = curr.next;
+  curr.next = prev;
+  prev = curr;
+  curr = next;
+}`,
+      "ll-detect-cycle": `// Detect Cycle (Floyd's)
+Node slow = head, fast = head;
+while (fast != null && fast.next != null) {
+  slow = slow.next; fast = fast.next.next;
+  if (slow == fast) return true;
+}`,
+
+      // 9. Stacks
+      "stacks-array": `// Stack using Array
+int[] stack = new int[100];
+int top = -1; // push: stack[++top] = x; pop: stack[top--];`,
+      "stacks-linkedlist": `// Stack using LinkedList
+class Node { int val; Node next; }
+Node top = null; // push: new Node(); pop: top = top.next;`,
+      "stacks-next-greater-element": `// Next Greater Element
+Stack<Integer> st = new Stack<>();
+for (int i = arr.length-1; i >= 0; i--) {
+  while (!st.isEmpty() && st.peek() <= arr[i]) st.pop();
+  // st.peek() is next greater for arr[i]
+  st.push(arr[i]);
+}`,
+      "stacks-balanced-parentheses": `// Balanced Parentheses
+Stack<Character> st = new Stack<>();
+for (char c : s.toCharArray()) {
+  if (c == '(') st.push(c);
+  else if (c == ')' && !st.isEmpty()) st.pop();
+}`,
+
+      // 10. Queues
+      "queues-array": `// Queue using Array
+int[] queue = new int[100];
+int front = 0, rear = 0; // enqueue: queue[rear++] = x; dequeue: queue[front++];`,
+      "queues-circular-queue": `// Circular Queue
+int[] q = new int[5];
+int front = 0, rear = 0; // (rear+1)%q.length`,
+      "queues-deque-operations": `// Deque Operations
+Deque<Integer> dq = new ArrayDeque<>(); dq.addFirst(1); dq.addLast(2);`,
+      "queues-priority-queue": `// Priority Queue
+PriorityQueue<Integer> pq = new PriorityQueue<>(); pq.add(5); pq.poll();`,
+
+      // 11. Hashing
+      "hash-hashmap-basics": `// HashMap Basics
+Map<String, Integer> map = new HashMap<>(); map.put("a", 1);`,
+      "hash-frequency-count": `// Frequency Count
+for (int x : arr) map.put(x, map.getOrDefault(x, 0) + 1);`,
+      "hash-two-sum-problem": `// Two Sum Problem
+for (int x : arr) {
+  if (map.containsKey(target - x)) return true;
+  map.put(x, 1);
+}`,
+      "hash-anagram-groups": `// Group Anagrams
+Map<String, List<String>> groups = new HashMap<>();`,
+
+      // 12. Trees
+      "tree-binary-tree-basics": `// Binary Tree Node
+class TreeNode { int val; TreeNode left, right; }`,
+      "tree-traversals": `// DFS Traversal
+void dfs(TreeNode root) {
+  if (root == null) return;
+  dfs(root.left); dfs(root.right);
+}`,
+      "tree-bst": `// BST Insert
+TreeNode insert(TreeNode root, int val) {
+  if (root == null) return new TreeNode(val);
+  if (val < root.val) root.left = insert(root.left, val);
+  else root.right = insert(root.right, val);
+  return root;
+}`,
+      "tree-lowest-common-ancestor": `// LCA in BST
+TreeNode lca(TreeNode root, int a, int b) {
+  if (root.val > a && root.val > b) return lca(root.left, a, b);
+  if (root.val < a && root.val < b) return lca(root.right, a, b);
+  return root;
+}`,
+
+      // 13. Heaps
+      "heap-min-heap": `// Min Heap using PriorityQueue
+PriorityQueue<Integer> minHeap = new PriorityQueue<>();`,
+      "heap-max-heap": `// Max Heap using PriorityQueue
+PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());`,
+      "heap-heap-sort": `// Heap Sort
+PriorityQueue<Integer> pq = new PriorityQueue<>();
+for (int x : arr) pq.add(x);
+while (!pq.isEmpty()) System.out.print(pq.poll() + " ");`,
+      "heap-top-k-elements": `// Top K Elements
+PriorityQueue<Integer> pq = new PriorityQueue<>();
+for (int x : arr) {
+  pq.add(x);
+  if (pq.size() > k) pq.poll();
+}`,
+
+      // 14. Graphs
+      "graph-adjacency-list-matrix": `// Adjacency List
+List<List<Integer>> adj = new ArrayList<>();`,
+      "graph-dfs-bfs": `// DFS
+void dfs(int u, boolean[] vis) {
+  vis[u] = true;
+  for (int v : adj.get(u)) if (!vis[v]) dfs(v, vis);
+}`,
+      "graph-dijkstra": `// Dijkstra's Algorithm
+PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));`,
+      "graph-topological-sort": `// Topological Sort (Kahn's)
+Queue<Integer> q = new LinkedList<>();`,
+
+      // 15. Dynamic Programming
+      "dp-1d-problems": `// 1D DP Example
+int[] dp = new int[n+1]; dp[0] = 1;`,
+      "dp-2d-problems": `// 2D DP Example
+int[][] dp = new int[n][m];`,
+      "dp-memoization-vs-tabulation": `// Memoization vs Tabulation
+// Memo: top-down, Tab: bottom-up`,
+      "dp-longest-subsequence": `// Longest Increasing Subsequence
+int[] dp = new int[n]; Arrays.fill(dp, 1);`,
+
+      // 16. Greedy Algorithms
+      "greedy-activity-selection": `// Activity Selection
+Arrays.sort(intervals, (a, b) -> a[1] - b[1]);`,
+      "greedy-huffman-encoding": `// Huffman Encoding
+PriorityQueue<Node> pq = new PriorityQueue<>();`,
+      "greedy-fractional-knapsack": `// Fractional Knapsack
+Arrays.sort(items, (a, b) -> b.ratio - a.ratio);`,
+      "greedy-job-scheduling": `// Job Scheduling
+Arrays.sort(jobs, (a, b) -> b.profit - a.profit);`,
+
+      // 17. Sliding Window
+      "sw-fixed-window": `// Fixed Window
+for (int i = 0; i <= n - k; i++) { /* process arr[i..i+k-1] */ }`,
+      "sw-variable-window": `// Variable Window
+int left = 0;
+for (int right = 0; right < n; right++) {
+  // expand window, shrink as needed
+}`,
+      "sw-max-min-window": `// Max/Min in Window
+Deque<Integer> dq = new ArrayDeque<>();`,
+      "sw-longest-substring": `// Longest Substring Without Repeat
+Map<Character, Integer> map = new HashMap<>();`,
+
+      // 18. Bit Manipulation
+      "bit-and-or-xor": `// AND, OR, XOR
+int a = 5 & 3; int b = 5 | 3; int c = 5 ^ 3;`,
+      "bit-shifts": `// Bit Shifts
+int x = 8 << 1; int y = 8 >> 1;`,
+      "bit-power-of-two": `// Power of Two
+boolean isPow2 = (n & (n-1)) == 0;`,
+      "bit-counting-set-bits": `// Counting Set Bits
+int count = Integer.bitCount(n);`,
+
+      // 19. Trie
+      "trie-construction": `// Trie Node
+class TrieNode { TrieNode[] children = new TrieNode[26]; boolean isEnd; }`,
+      "trie-word-search": `// Word Search in Trie
+TrieNode node = root;
+for (char c : word.toCharArray()) node = node.children[c-'a'];`,
+      "trie-prefix-matching": `// Prefix Matching
+// Similar to word search, but return true if node != null`,
+      "trie-autocomplete-system": `// Autocomplete System
+// DFS from prefix node to collect words`,
+
+      // 20. Backtracking
+      "bt-n-queens": `// N-Queens Backtracking
+void solve(int row) {
+  if (row == n) { /* print board */ return; }
+  for (int col = 0; col < n; col++) { /* check & place queen */ }
+}`,
+      "bt-sudoku-solver": `// Sudoku Solver Backtracking
+boolean solveSudoku(char[][] board) { /* ... */ }`,
+      "bt-subsets-permutations": `// Subsets & Permutations
+void backtrack(List<Integer> curr, int[] nums) { /* ... */ }`,
+      "bt-word-search-grid": `// Word Search in Grid
+boolean exist(char[][] board, String word) { /* ... */ }`
+    };
+
+    // Show definition & example when one checkbox is selected per section
+    document.querySelectorAll('.roadmap-box').forEach(section => {
+      const exampleBox = section.querySelector('.example-box');
+      if (!exampleBox) return;
+      section.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', function() {
+          // Uncheck others in this section
+          section.querySelectorAll('input[type="checkbox"]').forEach(other => {
+            if (other !== cb) other.checked = false;
+          });
+          if (cb.checked) {
+            const def = cb.getAttribute('data-definition');
+            const example = javaExamples[cb.id] || 'No example available.';
+            exampleBox.style.display = 'block';
+            exampleBox.innerHTML = `<div class="definition">${def}</div><pre>${example}</pre>`;
+          } else {
+            exampleBox.style.display = 'none';
+            exampleBox.innerHTML = '';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
