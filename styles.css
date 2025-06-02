@@ -105,6 +105,16 @@ body {
 .roadmap-box .content {
   padding: 12px 16px;
   flex: 1;
+  max-height: 300px;
+  overflow-y: auto;
+  transition: max-height 0.4s cubic-bezier(.4,2,.6,1), padding-bottom 0.3s;
+}
+
+/* When example-box is visible, expand the content area for clarity */
+.roadmap-box .content:has(.example-box[style*="display: block"]) {
+  max-height: 900px;
+  padding-bottom: 32px;
+  overflow-y: visible;
 }
 
 /* ====== SUBTOPICS LIST ====== */
@@ -154,10 +164,6 @@ body {
 }
 
 /* ====== SCROLLBAR STYLING ====== */
-.roadmap-box .content {
-  max-height: 300px;
-  overflow-y: auto;
-}
 .roadmap-box .content::-webkit-scrollbar {
   width: 6px;
 }
@@ -202,6 +208,22 @@ body {
 @keyframes popIn {
   0% { transform: scale(0.95); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
+}
+
+/* ====== SORT VISUALIZATION BAR ====== */
+.sort-visual-bar {
+  display: inline-block;
+  margin: 0 2px;
+  background: linear-gradient(180deg, #ffd600 60%, #ffecb3 100%);
+  border-radius: 3px 3px 0 0;
+  transition: height 0.3s, background 0.2s;
+  vertical-align: bottom;
+}
+.sort-visual-bar.active {
+  background: #ff7043;
+}
+.sort-visual-bar.sorted {
+  background: #43a047;
 }
 
 /* ====== RESPONSIVE ====== */

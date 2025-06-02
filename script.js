@@ -754,3 +754,294 @@ document.querySelectorAll('.roadmap-box').forEach(section => {
     });
   });
 });
+
+// --- Sorting Visualizer Logic ---
+function renderBarsWithNumbers(arr, active = [], sorted = []) {
+  const visual = document.getElementById('sorting-visual');
+  if (!visual) return;
+  visual.innerHTML =
+    `<div style="display:flex;justify-content:center;gap:6px;margin-bottom:8px;">
+      ${arr.map((val, idx) =>
+        `<span style="font-weight:bold;font-size:1.1em;color:${sorted.includes(idx) ? '#43a047' : active.includes(idx) ? '#e53935' : '#333'};">
+          ${val}
+        </span>`
+      ).join('')}
+    </div>
+    <div style="display:flex;align-items:flex-end;justify-content:center;gap:6px;">
+      ${arr.map((val, idx) => {
+        let cls = 'sort-visual-bar';
+        if (sorted.includes(idx)) cls += ' sorted';
+        else if (active.includes(idx)) cls += ' active';
+        return `<div class="${cls}" style="height:${val * 3 + 30}px;width:22px;"></div>`;
+      }).join('')}
+    </div>`;
+}
+
+function sleep(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+async function bubbleSortVisual(arr) {
+  const n = arr.length;
+  let sorted = [];
+  for (let i = 0; i < n - 1; i++) {
+    for (let j = 0; j < n - i - 1; j++) {
+      renderBarsWithNumbers(arr, [j, j + 1], sorted);
+      await sleep(1200);
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        renderBarsWithNumbers(arr, [j, j + 1], sorted);
+        await sleep(1200);
+      }
+    }
+    sorted.unshift(n - i - 1);
+  }
+  renderBarsWithNumbers(arr, [], Array.from({length: n}, (_, i) => i));
+}
+
+async function selectionSortVisual(arr) {
+  const n = arr.length;
+  let sorted = [];
+  for (let i = 0; i < n - 1; i++) {
+    let minIdx = i;
+    for (let j = i + 1; j < n; j++) {
+      renderBarsWithNumbers(arr, [minIdx, j], sorted);
+      await sleep(1200);
+      if (arr[j] < arr[minIdx]) minIdx = j;
+    }
+    [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+    sorted.push(i);
+    renderBarsWithNumbers(arr, [], sorted);
+    await sleep(1200);
+  }
+  renderBarsWithNumbers(arr, [], Array.from({length: n}, (_, i) => i));
+}
+
+async function mergeSortVisual(arr) {
+  const n = arr.length;
+  let bars = arr.slice();
+  let sorted = [];
+
+  async function merge(l, m, r) {
+    let left = bars.slice(l, m + 1);
+    let right = bars.slice(m + 1, r + 1);
+    let i = 0, j = 0, k = l;
+    while (i < left.length && j < right.length) {
+      renderBarsWithNumbers(bars, [k], sorted);
+      await sleep(1200);
+      if (left[i] <= right[j]) {
+        bars[k++] = left[i++];
+      } else {
+        bars[k++] = right[j++];
+      }
+      renderBarsWithNumbers(bars, [k - 1], sorted);
+      await sleep(1200);
+    }
+    while (i < left.length) {
+      bars[k++] = left[i++];
+      renderBarsWithNumbers(bars, [k - 1], sorted);
+      await sleep(1200);
+    }
+    while (j < right.length) {
+      bars[k++] = right[j++];
+      renderBarsWithNumbers(bars, [k - 1], sorted);
+      await sleep(1200);
+    }
+  }
+
+  async function mergeSort(l, r) {
+    if (l < r) {
+      let m = Math.floor((l + r) / 2);
+      await mergeSort(l, m);
+      await mergeSort(m + 1, r);
+      await merge(l, m, r);
+    }
+  }
+  await mergeSort(0, n - 1);
+  renderBarsWithNumbers(bars, [], Array.from({length: n}, (_, i) => i));
+}
+
+async function quickSortVisual(arr) {
+  const n = arr.length;
+  let bars = arr.slice();
+
+  async function partition(low, high) {
+    let pivot = bars[high];
+    let i = low;
+    for (let j = low; j < high; j++) {
+      renderBarsWithNumbers(bars, [j, high], []);
+      await sleep(1200);
+      if (bars[j] < pivot) {
+        [bars[i], bars[j]] = [bars[j], bars[i]];
+        i++;
+        renderBarsWithNumbers(bars, [i - 1, j], []);
+        await sleep(1200);
+      }
+    }
+    [bars[i], bars[high]] = [bars[high], bars[i]];
+    renderBarsWithNumbers(bars, [i, high], []);
+    await sleep(1200);
+    return i;
+  }
+
+  async function quickSort(low, high) {
+    if (low < high) {
+      let pi = await partition(low, high);
+      await quickSort(low, pi - 1);
+      await quickSort(pi + 1, high);
+    }
+  }
+  await quickSort(0, n - 1);
+  renderBarsWithNumbers(bars, [], Array.from({length: n}, (_, i) => i));
+}
+
+// --- End Sorting Visualizer Logic ---
+
+// Patch for Sorting Section: show visual when sorting checkbox is checked
+document.addEventListener('DOMContentLoaded', () => {
+  const sortingSection = document.getElementById('sorting-section');
+  if (sortingSection) {
+    const exampleBox = document.getElementById('sorting-example');
+    const checkboxes = sortingSection.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', async function() {
+        // Uncheck all others in this section (radio-like)
+        checkboxes.forEach(other => {
+          if (other !== cb) other.checked = false;
+        });
+        if (cb.checked) {
+          // Show definition + example
+          const defText = cb.getAttribute('data-definition') || '';
+          const snippet = javaExamples[cb.id] || '// No example available.';
+          let arr = [7, 3, 9, 2, 5, 8, 1, 4];
+          exampleBox.style.display = 'block';
+          exampleBox.innerHTML = `
+            <div class="definition">${defText}</div>
+            <div style="margin:12px 0 18px 0;text-align:center;">
+              <strong>Visualization:</strong>
+              <div id="sorting-visual" style="height:120px;margin:10px 0 0 0;"></div>
+            </div>
+            <pre>${snippet}</pre>
+          `;
+          // Wait for DOM update
+          setTimeout(async () => {
+            if (cb.id === "sort-bubble-sort") await bubbleSortVisual(arr.slice());
+            else if (cb.id === "sort-selection-sort") await selectionSortVisual(arr.slice());
+            else if (cb.id === "sort-merge-sort") await mergeSortVisual(arr.slice());
+            else if (cb.id === "sort-quick-sort") await quickSortVisual(arr.slice());
+          }, 100);
+        } else {
+          exampleBox.style.display = 'none';
+          exampleBox.innerHTML = '';
+        }
+      });
+    });
+  }
+
+  // --- Visualization for Searching Algorithms ---
+
+  function renderSearchVisualization(arr, active = [], foundIdx = -1, key = null, label = "") {
+    const visual = document.getElementById('searching-visual');
+    if (!visual) return;
+    visual.innerHTML =
+      `<div style="display:flex;justify-content:center;gap:7px;margin-bottom:10px;">
+        ${arr.map((val, idx) =>
+          `<span style="
+            font-weight:600;
+            font-size:1.05em;
+            padding:5px 10px;
+            border-radius:8px;
+            background:${foundIdx === idx ? 'linear-gradient(90deg,#b9f6ca 60%,#69f0ae 100%)' : active.includes(idx) ? 'linear-gradient(90deg,#fffde7 60%,#ffe082 100%)' : 'linear-gradient(90deg,#f5f5f5 60%,#e0e0e0 100%)'};
+            color:${foundIdx === idx ? '#087f23' : active.includes(idx) ? '#ff8f00' : '#333'};
+            box-shadow:${foundIdx === idx ? '0 2px 8px #b9f6ca' : active.includes(idx) ? '0 1px 4px #ffe082' : '0 1px 2px #eee'};
+            border:${foundIdx === idx ? '2px solid #43a047' : active.includes(idx) ? '2px solid #ffd600' : '1px solid #e0e0e0'};
+            letter-spacing:0.5px;
+            transition:all 0.2s;
+            ">
+            ${val}
+          </span>`
+        ).join('')}
+      </div>
+      <div style="display:flex;align-items:flex-end;justify-content:center;gap:7px;">
+        ${arr.map((val, idx) => {
+          let cls = 'sort-visual-bar';
+          if (foundIdx === idx) cls += ' sorted';
+          else if (active.includes(idx)) cls += ' active';
+          return `<div class="${cls}" style="height:${val * 2 + 18}px;width:14px;"></div>`;
+        }).join('')}
+      </div>
+      <div style="text-align:center;margin-top:10px;font-size:1em;font-weight:500;letter-spacing:0.5px;color:#1b5e20;background:linear-gradient(90deg,#e8f5e9 60%,#b2dfdb 100%);border-radius:7px;padding:6px 0;">
+        ${label}
+      </div>`;
+  }
+
+  async function linearSearchVisual(arr, key) {
+    for (let i = 0; i < arr.length; i++) {
+      renderSearchVisualization(arr, [i], -1, key, `Checking index ${i}...`);
+      await sleep(1000);
+      if (arr[i] === key) {
+        renderSearchVisualization(arr, [], i, key, `Found ${key} at index ${i}!`);
+        return;
+      }
+    }
+    renderSearchVisualization(arr, [], -1, key, `${key} not found.`);
+  }
+
+  async function binarySearchVisual(arr, key) {
+    let left = 0, right = arr.length - 1;
+    arr = arr.slice().sort((a, b) => a - b);
+    while (left <= right) {
+      let mid = Math.floor((left + right) / 2);
+      renderSearchVisualization(arr, [mid], -1, key, `Checking index ${mid}...`);
+      await sleep(1200);
+      if (arr[mid] === key) {
+        renderSearchVisualization(arr, [], mid, key, `Found ${key} at index ${mid}!`);
+        return;
+      } else if (arr[mid] < key) {
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
+    }
+    renderSearchVisualization(arr, [], -1, key, `${key} not found.`);
+  }
+
+  // Searching Section Visualization
+  const searchingSection = document.getElementById('searching-section');
+  if (searchingSection) {
+    const exampleBox = document.getElementById('searching-example');
+    const checkboxes = searchingSection.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', async function() {
+        // Uncheck all others in this section (radio-like)
+        checkboxes.forEach(other => {
+          if (other !== cb) other.checked = false;
+        });
+        if (cb.checked) {
+          // Show definition + example
+          const defText = cb.getAttribute('data-definition') || '';
+          const snippet = javaExamples[cb.id] || '// No example available.';
+          let arr = [7, 3, 9, 2, 5, 8, 1, 4];
+          let key = 5;
+          exampleBox.style.display = 'block';
+          exampleBox.innerHTML = `
+            <div class="definition">${defText}</div>
+            <div style="margin:12px 0 18px 0;text-align:center;">
+              <strong>Visualization:</strong>
+              <div id="searching-visual" style="height:120px;margin:10px 0 0 0;"></div>
+            </div>
+            <pre>${snippet}</pre>
+          `;
+          setTimeout(async () => {
+            if (cb.id === "search-linear-search") await linearSearchVisual(arr.slice(), key);
+            else if (cb.id === "search-binary-search") await binarySearchVisual(arr.slice(), key);
+            // You can add more visualizations for other search types here
+          }, 100);
+        } else {
+          exampleBox.style.display = 'none';
+          exampleBox.innerHTML = '';
+        }
+      });
+    });
+  }
+});
